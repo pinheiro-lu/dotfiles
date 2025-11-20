@@ -1,46 +1,40 @@
-"enable numbers on left side of the screen
+" ==============================
+" ICPC-READY VIM CONFIGURATION
+" ==============================
+
+" Show line numbers
 set number
 set relativenumber
 
-"tab size in number of spaces
-set tabstop=4 
+" Tabs and indentation
+set tabstop=4
 set shiftwidth=4
-
-"navigating among splits
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-
-"set autoindent
 set smartindent
 
-"enable search while typing
-set incsearch
-
-"map <C-L> to accept the word from copilot
-imap <C-L> <Plug>(copilot-accept-word)
-
-"enable matchpair for <>
-set mps+=<:>
-
-"enable mouse
+" Mouse support
 set mouse=a
 
-"Plugin manager
-call plug#begin('~/.vim/plugged')
-	"LaTeX Plugin
-	Plug 'lervag/vimtex'
-	"Tree of files
-	Plug 'preservim/nerdtree'
-	"Improve highlighting and indentation for javascript files
-	"Plug 'pangloss/vim-javascript'
-	Plug 'maxmellon/vim-jsx-pretty'
-	"Improve highlighting and indentation for typescript files
-	"Plug 'leafgarland/typescript-vim'
-"End of plugin manager
-call plug#end()
+" Search settings
+set incsearch
 
-"VimTeX settings
-let g:vimtex_view_method = 'zathura'
+" Enable matching pairs for <>
+set mps+=<:>
 
+" Show column limit
+set colorcolumn=80
+
+" Split navigation with Ctrl + hjkl
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+syntax on
+set undofile
+set undodir=~/.vim/undodir
+if !isdirectory(expand(&undodir))
+  call mkdir(expand(&undodir), "p")
+endif
+
+nnoremap j gj
+nnoremap k gk
