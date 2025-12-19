@@ -20,9 +20,6 @@ set incsearch
 " Enable matching pairs for <>
 set mps+=<:>
 
-" Show column limit
-set colorcolumn=80
-
 " Split navigation with Ctrl + hjkl
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -38,3 +35,5 @@ endif
 
 nnoremap j gj
 nnoremap k gk
+
+set scrolloff=8
