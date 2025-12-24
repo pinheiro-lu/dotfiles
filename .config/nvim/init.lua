@@ -21,12 +21,14 @@ vim.keymap.set('n', '<leader>ag',
 	end, { desc = 'Sidekick Toggle Gemini' }
 )
 vim.keymap.set('n', '<leader>af',
-	function() require('sidekick.cli').send({ msg = "{file}" }) end,
-	{ desc = 'Sidekick Send File' }
+	function() 
+		require('sidekick.cli').send({ msg = "{file}" }) 
+	end, { desc = 'Sidekick Send File' }
 )
 vim.keymap.set('x', '<leader>av',
-	function() require('sidekick.cli').send({ msg = "{selection}" }) end,
-	{ desc = 'Sidekick Send Visual Selection' }
+	function() 
+		require('sidekick.cli').send({ msg = "{selection}" })
+	end, { desc = 'Sidekick Send Visual Selection' }
 )
 vim.keymap.set('n', '<Tab>',
 	function()
@@ -56,16 +58,27 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 -- Set colorcolumn to 80 for all filetypes except markdown or typst
+function Set(elements)
+	local set = {}
+	for _, element in ipairs(elements) do
+		set[element] = true
+	end
+	return set
+end
+plain_text_filetypes = Set{ "markdown", "typst", "latex", "plain", "context" }
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
     callback = function()
-        if vim.bo.filetype ~= 'markdown' and vim.bo.filetype ~= 'typst' then
+        if not plain_text_filetypes[vim.bo.filetype] then
             vim.wo.colorcolumn = '80'
         end
     end,
 })
+
+-- Wrap lines at word boundaries
 vim.opt.linebreak = true
 
+-- Activate command-line auto-completion
 vim.api.nvim_create_autocmd("CmdlineChanged", {
 	pattern = ":",
 	callback = function()
@@ -73,4 +86,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 	end,
 })
 vim.opt.wildmode = { "noselect", "lastused", "full" }
---vim.opt.wildoptions = "pum"
+vim.opt.wildoptions = "pum"
+
+-- Set a descent colorscheme
+vim.cmd('colorscheme slate')
