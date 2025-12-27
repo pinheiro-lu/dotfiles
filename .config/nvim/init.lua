@@ -57,19 +57,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end,
 })
 
--- Set colorcolumn to 80 for all filetypes except markdown or typst
-function Set(elements)
-	local set = {}
-	for _, element in ipairs(elements) do
-		set[element] = true
-	end
-	return set
-end
-plain_text_filetypes = Set{ "markdown", "typst", "latex", "plain", "context" }
+-- Set colorcolumn to 80 for all filetypes except plaintext
+local plain_text_filetypes = { "markdown", "typst", "latex", "plaintex", "context" }
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
     callback = function()
-        if not plain_text_filetypes[vim.bo.filetype] then
+        if not vim.list_contains(plain_text_filetypes, vim.bo.filetype) then
             vim.wo.colorcolumn = '80'
         end
     end,
@@ -88,5 +81,5 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 vim.opt.wildmode = { "noselect", "lastused", "full" }
 vim.opt.wildoptions = "pum"
 
--- Set a descent colorscheme
+-- Set a decent colorscheme
 vim.cmd('colorscheme slate')
