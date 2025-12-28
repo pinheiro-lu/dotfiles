@@ -7,9 +7,8 @@ vim.opt.undodir = undo_dir
 vim.opt.undofile = true
 
 vim.pack.add({
-	{ src = 'https://github.com/nvim-treesitter/nvim-treesitter.git',
-		branch = 'master' },
 	{ src = 'https://github.com/github/copilot.vim.git' },
+	{ src = 'https://github.com/nvim-treesitter/nvim-treesitter.git' },
 	{ src = 'https://github.com/folke/sidekick.nvim.git' },
 })
 
@@ -43,22 +42,15 @@ vim.api.nvim_set_keymap(
 )
 
 -- Configure nvim-treesitter for LaTeX
-vim.api.nvim_create_autocmd("VimEnter", {
-	pattern = "*",
-	once = true,
-	callback = function()
-		pcall(function()
-			require'nvim-treesitter.configs'.setup {
-				ensure_installed = { "latex", "markdown", "markdown_inline" },
-				highlight = { enable = true }, indent = { enable = true },
-			}
-			vim.cmd('TSUpdate')
-		end)
-	end,
-})
+require'nvim-treesitter.configs'.setup {
+	ensure_installed = { "latex" },
+	highlight = { enable = true },
+}
 
 -- Set colorcolumn to 80 for all filetypes except plaintext
-local plain_text_filetypes = { "markdown", "typst", "latex", "plaintex", "context" }
+local plain_text_filetypes = {
+	"markdown", "typst", "tex", "plaintex", "context"
+}
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
     callback = function()
