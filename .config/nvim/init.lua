@@ -10,7 +10,10 @@ vim.pack.add({
 	{ src = 'https://github.com/github/copilot.vim.git' },
 	{ src = 'https://github.com/nvim-treesitter/nvim-treesitter.git' },
 	{ src = 'https://github.com/folke/sidekick.nvim.git' },
+	{ src = 'https://github.com/kylechui/nvim-surround.git' },
 })
+
+require('nvim-surround').setup()
 
 -- Configure sidekick.nvim
 require('sidekick').setup()
@@ -47,14 +50,14 @@ require'nvim-treesitter.configs'.setup {
 	highlight = { enable = true },
 }
 
--- Set colorcolumn to 80 for all filetypes except plaintext
-local plain_text_filetypes = {
-	"markdown", "typst", "tex", "plaintex", "context"
+-- Set colorcolumn to 80 for all filetypes except academic
+local academic_filetypes = {
+	"typst", "tex", "plaintex", "context"
 }
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
     callback = function()
-        if not vim.list_contains(plain_text_filetypes, vim.bo.filetype) then
+        if not vim.list_contains(academic_filetypes, vim.bo.filetype) then
             vim.wo.colorcolumn = '80'
         end
     end,
