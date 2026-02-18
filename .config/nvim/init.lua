@@ -11,9 +11,11 @@ vim.pack.add({
 	{ src = 'https://github.com/nvim-treesitter/nvim-treesitter.git' },
 	{ src = 'https://github.com/folke/sidekick.nvim.git' },
 	{ src = 'https://github.com/kylechui/nvim-surround.git' },
+	{ src = 'https://github.com/mason-org/mason.nvim.git' },
 })
 
 require('nvim-surround').setup()
+require('mason').setup()
 
 -- Configure sidekick.nvim
 require('sidekick').setup()
@@ -46,7 +48,7 @@ vim.api.nvim_set_keymap(
 
 -- Configure nvim-treesitter for LaTeX
 require'nvim-treesitter.configs'.setup {
-	ensure_installed = { "latex" },
+	ensure_installed = { "latex", "typst" },
 	highlight = { enable = true },
 }
 
@@ -78,3 +80,12 @@ vim.opt.wildoptions = "pum"
 
 -- Set a decent colorscheme
 vim.cmd('colorscheme slate')
+
+-- Set Typst LSP
+vim.lsp.config["tinymist"] = {
+    cmd = { "tinymist" },
+    filetypes = { "typst" },
+}
+vim.lsp.enable("tinymist")
+vim.lsp.inlay_hint.enable(true)
+
