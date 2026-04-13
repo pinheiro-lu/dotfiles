@@ -12,6 +12,7 @@ vim.pack.add({
 	{ src = 'https://github.com/folke/sidekick.nvim.git' },
 	{ src = 'https://github.com/kylechui/nvim-surround.git' },
 	{ src = 'https://github.com/mason-org/mason.nvim.git' },
+	{ src = 'https://github.com/pappasam/nvim-repl.git' },
 })
 
 require('nvim-surround').setup()
@@ -40,13 +41,18 @@ vim.keymap.set('n', '<Tab>',
 	end, { expr = true, noremap = true, desc = 'Sidekick Next Jump or Apply' }
 )
 
+-- Configure nvim-repl accordingly to :help repl_intro
+vim.keymap.set('n', '<leader>r', '<Plug>(ReplSendLine)')
+vim.keymap.set('x', '<leader>r', '<Plug>(ReplSendVisual)')
+vim.keymap.set('n', '<leader>c', '<Plug>(ReplSendCell)')
+
 -- Map Ctrl+L in insert mode to accept Copilot's next word
 vim.api.nvim_set_keymap(
 	"i", "<C-l>", "<Plug>(copilot-accept-word)",
 	{ noremap = false, silent = true }
 )
 
--- Configure nvim-treesitter for LaTeX
+-- Configure nvim-treesitter
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = { "latex", "typst" },
 	highlight = { enable = true },
