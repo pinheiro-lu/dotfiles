@@ -81,7 +81,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 		vim.fn.wildtrigger()
 	end,
 })
-vim.opt.wildmode = { "noselect", "lastused", "full" }
+vim.opt.wildmode = "noselect,full"
 vim.opt.wildoptions = "pum"
 
 -- Set a decent colorscheme
