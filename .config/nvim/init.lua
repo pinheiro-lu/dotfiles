@@ -13,6 +13,7 @@ vim.pack.add({
 	{ src = 'https://github.com/kylechui/nvim-surround.git' },
 	{ src = 'https://github.com/mason-org/mason.nvim.git' },
 	{ src = 'https://github.com/pappasam/nvim-repl.git' },
+	{ src = 'https://github.com/gnu-octave/vim-octave.git' },
 })
 
 require('nvim-surround').setup()
@@ -20,6 +21,11 @@ require('mason').setup()
 
 -- Configure sidekick.nvim
 require('sidekick').setup()
+vim.keymap.set('n', '<leader>ac',
+	function() 
+		require('sidekick.cli').toggle({ name = "copilot", focus = true })
+	end, { desc = 'Sidekick Toggle Copilot' }
+)
 vim.keymap.set('n', '<leader>ag',
 	function() 
 		require('sidekick.cli').toggle({ name = "gemini", focus = true })
@@ -58,7 +64,7 @@ require'nvim-treesitter.configs'.setup {
 	highlight = { enable = true },
 }
 
--- Set colorcolumn to 80 for all filetypes except academic
+-- Set colorcolumn to 81 for all filetypes except academic
 local academic_filetypes = {
 	"typst", "tex", "plaintex", "context"
 }
@@ -66,7 +72,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
     callback = function()
         if not vim.list_contains(academic_filetypes, vim.bo.filetype) then
-            vim.wo.colorcolumn = '80'
+            vim.wo.colorcolumn = '81'
         end
     end,
 })
@@ -95,3 +101,5 @@ vim.lsp.config["tinymist"] = {
 vim.lsp.enable("tinymist")
 vim.lsp.inlay_hint.enable(true)
 
+vim.keymap.set('n', 'j', 'gj')
+vim.keymap.set('n', 'k', 'gk')
