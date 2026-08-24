@@ -33,7 +33,4 @@ if !isdirectory(expand(&undodir))
   call mkdir(expand(&undodir), "p")
 endif
 
-nnoremap j gj
-nnoremap k gk
-
 set scrolloff=8
